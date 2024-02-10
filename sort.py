@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numpy.random import randint
 import sys
-# when dealing with bucket short the array size greater than 2000 seems to take a lot of time on my system and freeze
+# when dealing with bucket short the array size greater than 2000 seems to take a lot of time on my system and freeze so please see file bucket_sort_Comparision
 # the computer
 sys.setrecursionlimit(10 ** 6)
 MIN_MERGE = 32
@@ -218,12 +218,12 @@ class TimSort:
 
 
 def scenario_1(size):
-    return randint(0, 1000 * size, size=size)
+    return randint(0, size, size=size)
 
 
 # [0,k], k<1000
 def scenario_2(size):
-    return randint(0, 1000, size=size)
+    return randint(0, 999, size=size)
 
 
 # [0,n^3]
@@ -233,17 +233,20 @@ def scenario_3(size):
 
 # [0,log(n)]
 def scenario_4(size):
-    return randint(0, int(np.log2(size)), size=size)
+    return randint(0, int(np.log(size)), size=size)
 
 
 # [0,n](*1000)
 def scenario_5(size):
-    return [np.random.randint(0, size) * 1000 for _ in range(size)]
+    nums = []
+    for _ in range(size):
+        nums.append(random.randint(0, size // 1000) * 1000)
 
+    return nums
 
 # [0,n](swapped)
 def scenario_6(size):
-    number_swaps = int((np.log2(size) / 2) // 1)
+    number_swaps = int((np.log(size) / 2) // 1)
     sequence = list(range(size + 1))
     for i in range(number_swaps):
         index1, index2 = random.sample(range(size + 1), 2)
@@ -336,7 +339,8 @@ times_tim_sort = {"scenario_1": [], "scenario_2": [], "scenario_3": [], "scenari
 # please modify the for loop to start from 1000 to 20000 if you are  not running bucket sort else leave it as it is
 print("senario_1")
 # Scenario 1
-for i in range(100, 1000, 100):
+for i in range(1000, 50000, 1000):
+    print(i)
     a = scenario_1(i)
     a_quick = a
     a_heap = a
@@ -361,7 +365,7 @@ for i in range(100, 1000, 100):
     radix.algorithm(a_radix)
     end_radix = time.process_time()
     start_bucket = time.process_time()
-    bucket.algorithm(a_bucket)
+    #bucket.algorithm(a_bucket)
     end_bucket = time.process_time()
     elements.append(len(a))
     times_radix["scenario_1"].append(end_radix - start_radix)
@@ -374,7 +378,8 @@ for i in range(100, 1000, 100):
 elements = []
 # Scenario 2
 print("senario_2")
-for i in range(100, 1000, 100):
+for i in range(1000, 50000, 1000):
+    print(i)
     a = scenario_2(i)
     a_quick = a
     a_heap = a
@@ -399,7 +404,7 @@ for i in range(100, 1000, 100):
     radix.algorithm(a_radix)
     end_radix = time.process_time()
     start_bucket = time.process_time()
-    bucket.algorithm(a_bucket)
+    #bucket.algorithm(a_bucket)
     end_bucket = time.process_time()
     elements.append(len(a))
     times_radix["scenario_2"].append(end_radix - start_radix)
@@ -411,7 +416,8 @@ for i in range(100, 1000, 100):
 elements = []
 # Scenario 3
 print("senario_3")
-for i in range(100, 1000, 100):
+for i in range(1000, 50000, 1000):
+    print(i)
     a = scenario_3(i)
     a_quick = a
     a_heap = a
@@ -436,7 +442,7 @@ for i in range(100, 1000, 100):
     radix.algorithm(a_radix)
     end_radix = time.process_time()
     start_bucket = time.process_time()
-    bucket.algorithm(a_bucket)
+    #bucket.algorithm(a_bucket)
     end_bucket = time.process_time()
     elements.append(len(a))
     times_radix["scenario_3"].append(end_radix - start_radix)
@@ -447,7 +453,8 @@ for i in range(100, 1000, 100):
 # Scenario 4
 elements = []
 print("senario_4")
-for i in range(100, 1000, 100):
+for i in range(1000, 50000, 1000):
+    print(i)
     a = scenario_4(i)
     a_quick = a
     a_heap = a
@@ -472,7 +479,7 @@ for i in range(100, 1000, 100):
     radix.algorithm(a_radix)
     end_radix = time.process_time()
     start_bucket = time.process_time()
-    bucket.algorithm(a_bucket)
+    #bucket.algorithm(a_bucket)
     end_bucket = time.process_time()
     elements.append(len(a))
     times_radix["scenario_4"].append(end_radix - start_radix)
@@ -483,7 +490,8 @@ for i in range(100, 1000, 100):
 # Scenario 5
 elements = []
 print("senario_5")
-for i in range(100, 1000, 100):
+for i in range(1000, 50000, 1000):
+    print(i)
     a = scenario_5(i)
     a_quick = a
     a_heap = a
@@ -508,7 +516,7 @@ for i in range(100, 1000, 100):
     radix.algorithm(a_radix)
     end_radix = time.process_time()
     start_bucket = time.process_time()
-    bucket.algorithm(a_bucket)
+    #bucket.algorithm(a_bucket)
     end_bucket = time.process_time()
     elements.append(len(a))
     times_radix["scenario_5"].append(end_radix - start_radix)
@@ -519,7 +527,8 @@ for i in range(100, 1000, 100):
 # Scenario 6
 elements = []
 print("senario_6")
-for i in range(100, 1000, 100):
+for i in range(1000, 50000, 1000):
+    print(i)
     a = scenario_6(i)
     a_quick = a
     a_heap = a
@@ -544,7 +553,7 @@ for i in range(100, 1000, 100):
     radix.algorithm(a_radix)
     end_radix = time.process_time()
     start_bucket = time.process_time()
-    bucket.algorithm(a_bucket)
+    #bucket.algorithm(a_bucket)
     end_bucket = time.process_time()
     elements.append(len(a))
     times_bucket["scenario_6"].append(end_bucket - start_bucket)
@@ -558,5 +567,5 @@ graph_quick_sort(times_quick)
 graph_heap_sort(times_heap)
 graph_merge_sort(times_merge)
 graph_radix_sort(times_radix)
-graph_bucket_sort(times_bucket)
+#graph_bucket_sort(times_bucket)
 graph_tim_sort(times_tim_sort)
